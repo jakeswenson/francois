@@ -29,9 +29,9 @@ image="onoffswitch/francois:${GIT_SHA}_dev"
 echo ${image}
 docker run -it \
     -e HOST_IPADDR=`docker-machine ip $DOCKER_MACHINE_NAME` \
-    -e JENKINS_URL='http://dom-jenkins.cloud.dev.phx3.gdg/' \
+    -e JENKINS_URL=$JENKINS_URL \
     -e JENKINS_USER=francois \
-    -e JENKINS_TOKEN=f58671c2c594ba64b90c0a086f7a98bb \
+    -e JENKINS_TOKEN=$JENKINS_TOKEN \
     -p 9090:9090 \
     -p 9099:9099 \
     -p 1044:1044 \

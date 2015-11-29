@@ -1,49 +1,49 @@
-Domains Service Template
+Francois
 =====
 
-This is a dropwizard based service template to use for spinning up new projects.  
+Francois is a dropwizard.io api and web application for templatizing jenkins jobs. Francois is available as a docker image: https://hub.docker.com/r/onoffswitch/francois/
+Francois deploys to the port `9090` with its dropwizard admin port on `9099`.
 
-What this project gives you:
+Configuration
+===
 
-- Web enabled health checks and monitoring (via port 8081)
-- Properly set up SOA service modules
-- Version tagging (branch and git SHA) as part of all jar manifests
-- Version information in health checks
-- Unit testing and code coverage set ups
-- Java 1.8
-- Docker packaging support using the java base image
+Francois gets its configuration from either its configuration yaml file (configuration.yml) or the environment. 
 
-This project is ideal for both web services and for long running queue listeners. Even though web ports are specified, you get the utiltiies of a web based administration console in a long running process.
+The following environment variables are avaiable
 
-Required
-====
+- `JENKINS_URL`: this should point to your jenkins machine. example: `http://jenkins.jakeswenson.github.com/`
+- `JENKINS_USER`: this is the user created to manage jenkins and create jobs. example: `francois`
+- `JENKINS_TOKEN`: this should be the user token for that jenkins user above. You can get this from the users jenkins configuration page.
 
-RPM program. Install via brew or cygwin.
 
-Running your docker image
+Using the docker image
+=====
 
-Execute your service
-====
+
 
 ```
-./scripts/publish-docker.sh --build --package --name francois-service --tag dev
+docker run -it \
+    -e HOST_IPADDR=`docker-machine ip $DOCKER_MACHINE_NAME` \
+    -e JENKINS_URL='http://jenkins.jakeswenson.github.com/' \
+    -e JENKINS_USER=francois \
+    -e JENKINS_TOKEN=USER_JENKINS_TOKEN \
+    -p 9090:9090 \
+    -p 9099:9099 \
+    -p 1044:1044 \
+    -p 1898:1898 \
+    -v `pwd`/logs/core:/data/logs \
+    onoffswitch/francois
+```
+
+
+Building your own container
+=====
+
+Use: 
+
+```
+mvn clean package
 
 ./scripts/run-core.sh
 ```
 
-Known issues
-====
-
-If you get an error like:
-
-
-```[ERROR] Failed to execute goal org.apache.maven.plugins:maven-shade-plugin:2.2:shade (default) on project test-service-core: Error creating shaded jar: java.util.jar.Attributes cannot be cast to java.lang.String -> [Help 1]```
-
-It's because we are tryign to include the git branch and sha in the manifest but you are building the repo outside of a git project. Do a
-
-```
-git init
-git add --all .; cm "Initial checkin";
-```
-
-And retry
