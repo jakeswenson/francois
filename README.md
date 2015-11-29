@@ -1,8 +1,8 @@
-Francois
+François
 =====
 
-Francois is a dropwizard.io api and web application for templatizing jenkins jobs. Francois is available as a docker image: https://hub.docker.com/r/onoffswitch/francois/
-Francois deploys to the port `9090` with its dropwizard admin port on `9099`.
+François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: https://hub.docker.com/r/onoffswitch/francois/
+The app deploys to the port `9090` with its dropwizard admin port on `9099`.
 
 Configuration
 ===
@@ -20,10 +20,8 @@ Using the docker image
 =====
 
 
-
 ```
 docker run -it \
-    -e HOST_IPADDR=`docker-machine ip $DOCKER_MACHINE_NAME` \
     -e JENKINS_URL='http://jenkins.jakeswenson.github.com/' \
     -e JENKINS_USER=francois \
     -e JENKINS_TOKEN=USER_JENKINS_TOKEN \
@@ -47,3 +45,16 @@ mvn clean package
 ./scripts/run-core.sh
 ```
 
+Making changes to the UI
+=====
+
+François UI is built with Angular2 and typescript. make sure you have typscript installed:
+```
+sudo npm install --global typescript
+```
+
+and then install the dependencies:
+
+```
+npm install
+```
