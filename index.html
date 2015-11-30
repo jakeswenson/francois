@@ -28,15 +28,81 @@
     <div id="content-wrapper">
       <div class="inner clearfix">
         <section id="main-content">
-          <h3>
-<a id="what-is-francois" class="anchor" href="#what-is-francois" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is francois?</h3>
+          <h1>
+<a id="françois" class="anchor" href="#fran%C3%A7ois" aria-hidden="true"><span class="octicon octicon-link"></span></a>François</h1>
 
-<p>Francois is the tool you always wanted that helps managing jenkins job configurations. Jenkins doesn't support templating and so you end up copying all your jobs around and modifying them slightly. This makes it really hard to make a change to your build process, because you have to change it everywhere!</p>
+<p>François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: <a href="https://hub.docker.com/r/onoffswitch/francois/">https://hub.docker.com/r/onoffswitch/francois/</a>
+The app deploys to the port <code>9090</code> with its dropwizard admin port on <code>9099</code>. 
+All templates are stored and tracked using jenkins views, so no external database is required.</p>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<h1>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h1>
 
-<p><a href="https://github.com/jakeswenson" class="user-mention">@jakeswenson</a></p>
+<p>Francois gets its running configuration from either its configuration yaml file (configuration.yml) or the environment. </p>
+
+<p>The following environment variables are avaiable</p>
+
+<ul>
+<li>
+<code>JENKINS_URL</code>: this should point to your jenkins machine. example: <code>http://jenkins.jakeswenson.github.com/</code>
+</li>
+<li>
+<code>JENKINS_USER</code>: this is the user created to manage jenkins and create jobs. example: <code>francois</code>
+</li>
+<li>
+<code>JENKINS_TOKEN</code>: this should be the user token for that jenkins user above. You can get this from the users jenkins configuration page.</li>
+</ul>
+
+<p>Francois useses two views to manage all available tempaltes and templatized jobs:</p>
+
+<ul>
+<li>
+<code>Templates</code> and </li>
+<li>
+<code>Templatized</code> so create them in your jenkins instance.</li>
+</ul>
+
+<p>It doesn't matter what type of view they are, but it's simplest to create list views.</p>
+
+<h1>
+<a id="using-the-docker-image" class="anchor" href="#using-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the docker image</h1>
+
+<p>Run the docker image with:</p>
+
+<pre><code>docker run -it \ 
+    -e JENKINS_URL='http://jenkins.jakeswenson.github.com/' \
+    -e JENKINS_USER=francois \
+    -e JENKINS_TOKEN=USER_JENKINS_TOKEN \
+    -p 9090:9090 \
+    -p 9099:9099 \
+    -v `pwd`/logs/core:/data/logs \
+    onoffswitch/francois
+</code></pre>
+
+<h1>
+<a id="building-your-own-container" class="anchor" href="#building-your-own-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building your own container</h1>
+
+<p>Use: </p>
+
+<pre><code>mvn clean package
+
+./scripts/run-core.sh
+</code></pre>
+
+<h1>
+<a id="making-changes-to-the-ui" class="anchor" href="#making-changes-to-the-ui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making changes to the UI</h1>
+
+<p>François UI is built with Angular2 and typescript. make sure you have typscript installed:</p>
+
+<pre><code>sudo npm install --global typescript
+</code></pre>
+
+<p>and then install the dependencies:</p>
+
+<pre><code>npm install
+</code></pre>
+
+<p>Please file any issues you might find. Enjoy!</p>
         </section>
 
         <aside id="sidebar">
