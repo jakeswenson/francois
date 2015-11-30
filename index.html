@@ -31,12 +31,14 @@
           <h1>
 <a id="françois" class="anchor" href="#fran%C3%A7ois" aria-hidden="true"><span class="octicon octicon-link"></span></a>François</h1>
 
-<p>François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: <a href="https://hub.docker.com/r/onoffswitch/francois/">https://hub.docker.com/r/onoffswitch/francois/</a>
-The app deploys to the port <code>9090</code> with its dropwizard admin port on <code>9099</code>. 
-All templates are stored and tracked using jenkins views, so no external database is required.</p>
+<p>François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: <a href="https://hub.docker.com/r/onoffswitch/francois/">https://hub.docker.com/r/onoffswitch/francois/</a></p>
 
-<h1>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h1>
+<p>The app deploys to the port <code>9090</code> with its dropwizard admin port on <code>9099</code>.</p>
+
+<p>All templates are stored and tracked using jenkins views, so no external database is required.</p>
+
+<h3>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
 
 <p>Francois gets its running configuration from either its configuration yaml file (configuration.yml) or the environment. </p>
 
@@ -57,15 +59,17 @@ All templates are stored and tracked using jenkins views, so no external databas
 
 <ul>
 <li>
-<code>Templates</code> and </li>
+<code>Templates</code> - this is used to get a list of templates</li>
 <li>
-<code>Templatized</code> so create them in your jenkins instance.</li>
+<code>Templatized</code> - this is used to track all jobs created from templates</li>
 </ul>
+
+<p>so be sure create them in your jenkins instance.</p>
 
 <p>It doesn't matter what type of view they are, but it's simplest to create list views.</p>
 
-<h1>
-<a id="using-the-docker-image" class="anchor" href="#using-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the docker image</h1>
+<h3>
+<a id="using-the-docker-image" class="anchor" href="#using-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the docker image</h3>
 
 <p>Run the docker image with:</p>
 
@@ -80,17 +84,25 @@ All templates are stored and tracked using jenkins views, so no external databas
 </code></pre>
 
 <h1>
-<a id="building-your-own-container" class="anchor" href="#building-your-own-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building your own container</h1>
+<a id="adding-a-template" class="anchor" href="#adding-a-template" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding a template</h1>
 
-<p>Use: </p>
+<p>Adding templates are easy, simply create a job in jenkins and add it to the <code>Templates</code> view.</p>
+
+<p>Variables are do using <code>{% %}</code> tags. example: <code>{% Git.Repo %}</code>.
+You can also supply a default value in a variable using <code>|</code>. example: <code>{% Git.UserName | jakeswenson %}</code></p>
+
+<h2>
+<a id="building-your-own-francois-docker-container" class="anchor" href="#building-your-own-francois-docker-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building your own francois docker container</h2>
+
+<p>Builds are done using maven and maven docker plugin. Use:</p>
 
 <pre><code>mvn clean package
 
 ./scripts/run-core.sh
 </code></pre>
 
-<h1>
-<a id="making-changes-to-the-ui" class="anchor" href="#making-changes-to-the-ui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making changes to the UI</h1>
+<h2>
+<a id="making-changes-to-the-ui" class="anchor" href="#making-changes-to-the-ui" aria-hidden="true"><span class="octicon octicon-link"></span></a>Making changes to the UI</h2>
 
 <p>François UI is built with Angular2 and typescript. make sure you have typscript installed:</p>
 
