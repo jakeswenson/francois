@@ -1,13 +1,12 @@
-François
-=====
+# François
 
 François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: https://hub.docker.com/r/onoffswitch/francois/
-The app deploys to the port `9090` with its dropwizard admin port on `9099`. 
+
+The app deploys to the port `9090` with its dropwizard admin port on `9099`.
+
 All templates are stored and tracked using jenkins views, so no external database is required.
 
-Configuration
-===
-
+### Configuration
 Francois gets its running configuration from either its configuration yaml file (configuration.yml) or the environment. 
 
 The following environment variables are avaiable
@@ -18,13 +17,14 @@ The following environment variables are avaiable
 
 Francois useses two views to manage all available tempaltes and templatized jobs:
 
-- `Templates` and 
-- `Templatized` so create them in your jenkins instance.
+- `Templates` - this is used to get a list of templates
+- `Templatized` - this is used to track all jobs created from templates
+
+so be sure create them in your jenkins instance.
 
 It doesn't matter what type of view they are, but it's simplest to create list views.
 
-Using the docker image
-=====
+### Using the docker image
 
 Run the docker image with:
 
@@ -39,11 +39,15 @@ docker run -it \
     onoffswitch/francois
 ```
 
+# Adding a template
+Adding templates are easy, simply create a job in jenkins and add it to the `Templates` view.
 
-Building your own container
-=====
+Variables are do using `{% %}` tags. example: `{% Git.Repo %}`.
+You can also supply a default value in a variable using `|`. example: `{% Git.UserName | jakeswenson %}`
 
-Use: 
+## Building your own francois docker container
+
+Builds are done using maven and maven docker plugin. Use:
 
 ```
 mvn clean package
@@ -51,8 +55,7 @@ mvn clean package
 ./scripts/run-core.sh
 ```
 
-Making changes to the UI
-=====
+## Making changes to the UI
 
 François UI is built with Angular2 and typescript. make sure you have typscript installed:
 ```
