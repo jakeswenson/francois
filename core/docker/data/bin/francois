@@ -19,7 +19,10 @@ properties="${properties} -Dcom.sun.management.jmxremote.rmi.port=1898"
 properties="${properties} -Dcom.sun.management.jmxremote.port=1898"
 properties="${properties} -Dcom.sun.management.jmxremote.ssl=false"
 properties="${properties} -Dcom.sun.management.jmxremote.authenticate=false"
-properties="${properties} -Djava.rmi.server.hostname=${HOST_IPADDR}"
+
+if [ ! -z "${HOST_IPADDR}" ]; then
+    properties="${properties} -Djava.rmi.server.hostname=${HOST_IPADDR}"
+fi
 
 if [ "${DEBUG_JAVA}" == "true" ]; then
     properties="$properties -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=1044"

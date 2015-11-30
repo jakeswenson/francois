@@ -2,12 +2,13 @@ François
 =====
 
 François is a dropwizard.io api and web application for templatizing jenkins jobs. François is available as a docker image: https://hub.docker.com/r/onoffswitch/francois/
-The app deploys to the port `9090` with its dropwizard admin port on `9099`.
+The app deploys to the port `9090` with its dropwizard admin port on `9099`. 
+All templates are stored and tracked using jenkins views, so no external database is required.
 
 Configuration
 ===
 
-Francois gets its configuration from either its configuration yaml file (configuration.yml) or the environment. 
+Francois gets its running configuration from either its configuration yaml file (configuration.yml) or the environment. 
 
 The following environment variables are avaiable
 
@@ -15,20 +16,25 @@ The following environment variables are avaiable
 - `JENKINS_USER`: this is the user created to manage jenkins and create jobs. example: `francois`
 - `JENKINS_TOKEN`: this should be the user token for that jenkins user above. You can get this from the users jenkins configuration page.
 
+Francois useses two views to manage all available tempaltes and templatized jobs:
+
+- `Templates` and 
+- `Templatized` so create them in your jenkins instance.
+
+It doesn't matter what type of view they are, but it's simplest to create list views.
 
 Using the docker image
 =====
 
+Run the docker image with:
 
 ```
-docker run -it \
+docker run -it \ 
     -e JENKINS_URL='http://jenkins.jakeswenson.github.com/' \
     -e JENKINS_USER=francois \
     -e JENKINS_TOKEN=USER_JENKINS_TOKEN \
     -p 9090:9090 \
     -p 9099:9099 \
-    -p 1044:1044 \
-    -p 1898:1898 \
     -v `pwd`/logs/core:/data/logs \
     onoffswitch/francois
 ```
@@ -58,3 +64,5 @@ and then install the dependencies:
 ```
 npm install
 ```
+
+Please file any issues you might find. Enjoy!
